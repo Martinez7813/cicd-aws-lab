@@ -1,4 +1,4 @@
-name: "AWS VPC deployment"
+name: "AWS VPC destroy"
 
 on:
   push:
@@ -10,7 +10,7 @@ on:
 
 jobs:
   terraform:
-    name: "Deploying lab infrastructure."
+    name: "Destroying lab infrastructure."
     runs-on: ubuntu-latest
     env:
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -30,8 +30,8 @@ jobs:
       - name: "4. Terraform validate"
         run: terraform validate
 
-      - name: "5. Terraform plan"
-        run: terraform plan
+      - name: "5. Terraform plan (destroy)"
+        run: terraform plan -destroy
 
-      - name: "6. Terraform apply"
-        run: terraform apply -auto-approve
+      - name: "6. Terraform destroy"
+        run: terraform destroy -auto-approve
