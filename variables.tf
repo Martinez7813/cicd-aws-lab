@@ -1,5 +1,5 @@
 variable "region" {
-  default = "us-east-1"
+  default = "us-west-2"
 }
 
 variable "vpc_cidr" {
@@ -18,6 +18,6 @@ variable "private_subnet_cidrs" {
 
 variable "azs" {
   type    = list(string)
-  default = ["us-east-1a", "us-east-1b"]
+  default = ["us-west-2a", "us-west-2b"]
 }
 

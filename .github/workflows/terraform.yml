@@ -1,0 +1,38 @@
+name: "AWS VPC deployment"
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_REGION: "us-west-2"
+
+    steps:
+      - name: "1. Checkout code"
+        uses: actions/checkout@v4
+
+      - name: "2. Setup terraform"
+        uses: hashicorp/setup-terraform@v3
+
+      - name: "3. Terraform Init"
+        run: terraform init
+
+      - name: "4. Terraform validate"
+        run: terraform validate
+
+      - name: "5. Terraform plan"
+        run: terraform plan
+
+      - name: "6. Terraform apply"
+        if: github.red == 'refs/heads/main' && github.event_name == 'push'
+        run: terraform apply -auto-approve
