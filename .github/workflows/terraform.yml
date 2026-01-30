@@ -10,8 +10,8 @@ on:
 
 jobs:
   terraform:
+    name: "Deploying lab infrastructure."
     runs-on: ubuntu-latest
-
     env:
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -34,5 +34,4 @@ jobs:
         run: terraform plan
 
       - name: "6. Terraform apply"
-        if: github.red == 'refs/heads/main' && github.event_name == 'push'
         run: terraform apply -auto-approve
